@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SISTEMA DE PRODUÇÃO INSPECTRA</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            color: #004080;
+            text-align: center;
+            padding: 20px;
+        }
+        h1 {
+            color: #002060;
+        }
+        h2 {
+            color: #002060;
+        }
+        form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+        }
+        button {
+            background-color: #004080;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #002060;
+        }
+    </style>
+</head>
+<body>
+    <h1>SISTEMA DE PRODUÇÃO INSPECTRA</h1>
+    <h2>CONTROLE DE PRODUÇÃO</h2>
+    <form id="formLatas">
+        <label for="status">Status da Lata:</label>
+        <select id="status">
+            <option value="Boa">Boa</option>
+            <option value="Com Avarias">Com Avarias</option>
+            <option value="Danificada">Danificada</option>
+            <option value="Finalizada">Finalizada</option>
+        </select>
+        <button type="submit">Adicionar</button>
+    </form>
+    
+    <h2>Resumo da Produção</h2>
+    <ul id="resumo"></ul>
+    
+    <canvas id="grafico"></canvas>
+    
+    <button onclick="gerarPDF()">Gerar Relatório PDF</button>
+    
+    <script>
+        const dados = {
+            Finalizadas: Math.floor(Math.random() * 100),
+            Avaria: Math.floor(Math.random() * 50),
+            Danificada: Math.floor(Math.random() * 40)
+        };
+
+        const ctx = document.getElementById('grafico').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Finalizadas', 'Avaria', 'Danificada'],
+                datasets: [{
+                    label: 'Quantidade de Latas',
+                    data: Object.values(dados),
+                    backgroundColor: ['#4CAF50', '#FFC107', '#FF5722']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>
